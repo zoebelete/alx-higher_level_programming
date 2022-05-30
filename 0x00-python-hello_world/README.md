@@ -1,1 +1,1 @@
-python-hello_world
+This directory contains introductory tasks to python.
