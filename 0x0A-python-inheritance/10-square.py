@@ -1,20 +1,22 @@
 #!/usr/bin/python3
 """
-more class base
+This module contains a class
+with public instance and Raises
+exception when required
 """
 
 
 Rectangle = __import__('9-rectangle').Rectangle
 
 
-"""
-Square class
-"""
-
-
 class Square(Rectangle):
-    """ Square Class """
+    """
+    class Square that inherits from rectangle
+    """
     def __init__(self, size):
-        """ instantiation with size """
+        """
+        class instantiation
+        """
+        self.integer_validator("size", size)
         self.__size = size
-        super().__init__(self.__size, self.__size)
+        super().__init__(size, size)
