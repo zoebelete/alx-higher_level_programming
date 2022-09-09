@@ -1,19 +1,17 @@
 #!/usr/bin/python3
-'''
-    Defines classes for tables
-'''
-from model_state import Base
-from sqlalchemy import Column, Integer, String, ForeignKey
+"""
+file that defines class city
+"""
+from model_state import Base, State
+from sqlalchemy import Column, Integer, ForeignKey, String
 from sqlalchemy.orm import relationship
 
 
 class City(Base):
-    '''
-        Creates table for cities
-    '''
-    __tablename__ = "cities"
-    id = Column(Integer, autoincrement=True,
-                primary_key=True, nullable=False)
+    """
+    City class inherits from State
+    """
+    __tablename__ = 'cities'
+    id = Column('id', Integer, primary_key=True, nullable=False)
     name = Column(String(128), nullable=False)
-    state_id = Column(Integer, ForeignKey("states.id"), nullable=False)
-    state = relationship("State", back_populates="cities")
+    state_id = Column(Integer, ForeignKey('states.id'), nullable=False)

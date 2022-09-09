@@ -1,20 +1,24 @@
 #!/usr/bin/python3
 """
-All states via SQLAlchemy
+Script that deletes all states object with name containing a
+from db
 """
-from sys import argv
-from model_state import Base, State
-from sqlalchemy import (create_engine)
-from sqlalchemy.orm import Session
+
 
 if __name__ == "__main__":
-    engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'.
-                           format(argv[1], argv[2], argv[3]),
-                           pool_pre_ping=True)
-    Base.metadata.create_all(engine)
+    from sys import argv
+    from model_state import Base, State
+    from sqlalchemy import create_engine
+    from sqlalchemy.orm import sessionmaker
 
-    session = Session(engine)
-    data = session.query(State).filter(State.name.like("%a%"))\
-                               .delete(synchronize_session='fetch')
-    session.commit()
+    engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'.format(
+        argv[1], argv[2], argv[3]), pool_pre_ping=True)
+    Session = sessionmaker(bind=engine)
+    session = Session()
+    Base.metadata.create_all(engine)
+    st = session.query(State).filter(State.name.like('%a%')).all()
+    if st:
+        for stat in st:
+            session.delete(stat)
+        session.commit()
     session.close()
